@@ -48,8 +48,34 @@ public class PersonDAO implements IPersonDAO {
         return listPerson;
     }
 
+    /**
+     * Cria uma Pessoa
+     * @param person
+     * @return person OU null
+     */
     @Override
-    public Person addPerson() {
+    public Person addPerson(Person person) {
+        ResultSet resultSet = null;
+        PreparedStatement pstm = null;
+        Connection connection = null;
+
+        try {
+            connection = ConnectionFactory.getConnection();
+            pstm = connection.prepareStatement("INSERT INTO Crud (id, name, cpf, email, phone) VALUES (nextVal('crudSerial'), ?, ?, ?, ?)");
+            pstm.setString(1, person.getName());
+            pstm.setString(2, person.getCpf());
+            pstm.setString(3, person.getEmail());
+            pstm.setString(4, person.getPhone());
+            pstm.execute();
+
+            pstm.close();
+            connection.close();
+
+            return person;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         return null;
     }
 
