@@ -25,4 +25,12 @@ public class PersonService {
     public Person createPerson(Person person) {
         return personDAO.addPerson(person);
     }
+
+    /**
+     * Serviço - Remove uma Pessoa
+     * @param idPerson
+     */
+    public void removePerson(Integer idPerson) {
+        personDAO.deletePerson(idPerson);
+    }
 }
