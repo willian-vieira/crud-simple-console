@@ -84,8 +84,28 @@ public class PersonDAO implements IPersonDAO {
 
     }
 
+    /**
+     * Deleta uma Pessoa
+     * @param idPerson
+     */
     @Override
-    public void deletePerson() {
+    public void deletePerson(Integer idPerson) {
+        PreparedStatement pstm = null;
+        Connection connection = null;
 
+        try {
+            connection = ConnectionFactory.getConnection();
+            pstm = connection.prepareStatement("DELETE FROM Crud WHERE id = ?");
+            pstm.setInt(1, idPerson);
+            pstm.execute();
+
+            pstm.close();
+            connection.close();
+
+            System.out.println("Pessoa do ID: " + idPerson + " Deletado(a) com Sucesso!");
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
